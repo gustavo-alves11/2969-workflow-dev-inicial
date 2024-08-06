@@ -52,6 +52,19 @@ describe('GET em /autores', () => {
         done();
       });
   });
+  it('Não deve retornar uma lista de livros', (done) => {
+    const idAutor = 1;
+    chai.request(app)  // vai criar a requisição 
+      .get(`/autores/${idAutor}/livros`) // qual a requisição vai ser feita
+      .set('Accept', 'application/json') // qual o formato de dado vai ser passado pela requisição 
+      .end((err, res) => {//e o final 
+        expect(res.status).to.equal(200); // listamos tudo que esperamos de resposta 
+        expect(res.body).to.have.property('autor'); // res.body tem que ter uma propriedade
+        expect(res.body).to.have.property('livros');
+        expect(res.body.livros).to.be.an('array');// res.body.livros tem que ser um (to.be.an) array
+        done();
+      });
+  });
 });
 
 describe('POST em /autores', () => {

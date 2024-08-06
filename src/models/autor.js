@@ -53,9 +53,6 @@ class Autor {
   }
 
   async salvar() {
-    // verificar se o id existe no banco
-    // se não existir é create
-    // se existir é update
     if (this.id) {
       const resultado = await this.atualizar(this.id);
       return resultado;
@@ -63,6 +60,10 @@ class Autor {
     const resultado = await this.criar();
     return resultado;
   }
+  
+  static async pegaLivrosPorAutor(autorId) {
+    return db('livros')
+      .where({ autor_id: autorId });
+  }
 }
-
 export default Autor;
